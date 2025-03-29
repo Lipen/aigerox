@@ -36,7 +36,7 @@ impl Aig {
                 }
                 Record::AndGate {
                     id,
-                    inputs: [left, right],
+                    args: [left, right],
                 } => {
                     assert!(!id.is_negated());
                     let args = [lit2ref(left), lit2ref(right)];

@@ -103,7 +103,7 @@ pub enum Record {
     },
     AndGate {
         id: Literal,
-        inputs: [Literal; 2],
+        args: [Literal; 2],
     },
     Symbol {
         type_spec: SymbolType,
@@ -147,7 +147,7 @@ impl Record {
         match literals {
             &[id, left, right] => Ok(Record::AndGate {
                 id,
-                inputs: [left, right],
+                args: [left, right],
             }),
             _ => Err(eyre!(
                 "Invalid number of literals for and gate: expected 3, got {}",
@@ -238,7 +238,7 @@ impl Record {
                     ));
                 }
             }
-            Record::AndGate { id, inputs } => {
+            Record::AndGate { id, args } => {
                 if id.index() > header.m as u32 {
                     return Err(eyre!(
                         "And gate {} is out of range (1..{})",
@@ -246,7 +246,7 @@ impl Record {
                         header.m
                     ));
                 }
-                let [left, right] = inputs;
+                let [left, right] = args;
                 if left.index() > header.m as u32 {
                     return Err(eyre!(
                         "And gate left {} is out of range (1..{})",
@@ -474,7 +474,7 @@ mod tests {
             next(),
             Some(Record::AndGate {
                 id: Literal::new(6),
-                inputs: [Literal::new(2), Literal::new(4)]
+                args: [Literal::new(2), Literal::new(4)]
             })
         );
         assert_eq!(next(), None);
@@ -522,7 +522,7 @@ mod tests {
             next(),
             Some(Record::AndGate {
                 id: Literal::new(6),
-                inputs: [Literal::new(3), Literal::new(5)]
+                args: [Literal::new(3), Literal::new(5)]
             })
         );
         assert_eq!(next(), None);
