@@ -31,7 +31,7 @@ impl Aig {
         let i = self.inputs().len();
         let l = self.latches().len();
         let o = self.outputs().len();
-        let a = self.and_gates().count();
+        let a = self.and_gates().len();
         writeln!(writer, "{} {} {} {} {} {}", TAG, m, i, l, o, a)?;
 
         // Inputs:
@@ -51,7 +51,7 @@ impl Aig {
         }
 
         // Gates:
-        let mut gates: Vec<u32> = self.and_gates().map(|g| g.id).collect();
+        let mut gates: Vec<u32> = self.and_gates().to_vec();
         gates.sort();
         for id in gates {
             let gate = self.and_gate(id);
