@@ -33,11 +33,12 @@ impl PyAig {
     pub fn inputs(&self) -> Vec<u32> {
         self.inner.inputs().to_vec()
     }
-
+    pub fn latches(&self) -> Vec<u32> {
+        self.inner.latches().to_vec()
+    }
     pub fn outputs(&self) -> Vec<i32> {
         self.inner.outputs().iter().map(|r| r.get()).collect()
     }
-
     pub fn gates(&self) -> Vec<u32> {
         self.inner.and_gates().map(|gate| gate.id).collect()
     }
@@ -50,7 +51,9 @@ impl PyAig {
     pub fn is_input(&self, id: u32) -> bool {
         self.inner.is_input(id)
     }
-
+    pub fn is_latch(&self, id: u32) -> bool {
+        self.inner.is_latch(id)
+    }
     pub fn is_gate(&self, id: u32) -> bool {
         self.inner.is_gate(id)
     }
@@ -62,7 +65,6 @@ impl PyAig {
     pub fn layers_input(&self) -> Vec<Vec<u32>> {
         self.inner.layers_input().collect()
     }
-
     pub fn layers_output(&self) -> Vec<Vec<u32>> {
         self.inner.layers_output().collect()
     }
