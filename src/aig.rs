@@ -14,24 +14,6 @@ pub struct Aig {
     and_gates: Vec<u32>,
 }
 
-impl Aig {
-    pub const fn new(
-        nodes: HashMap<u32, Node>,
-        inputs: Vec<u32>,
-        latches: Vec<u32>,
-        outputs: Vec<Ref>,
-        and_gates: Vec<u32>,
-    ) -> Self {
-        Self {
-            nodes,
-            inputs,
-            latches,
-            outputs,
-            and_gates,
-        }
-    }
-}
-
 impl Default for Aig {
     fn default() -> Self {
         Self {
