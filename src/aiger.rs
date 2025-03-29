@@ -1,4 +1,3 @@
-use std::fmt::{Display, Formatter};
 use std::io::{BufRead, Lines};
 use std::str::FromStr;
 
@@ -78,16 +77,6 @@ impl FromStr for Header {
         }
 
         Ok(Header { m, i, l, o, a })
-    }
-}
-
-impl Display for Header {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{} {} {} {} {} {}",
-            TAG, self.m, self.i, self.l, self.o, self.a
-        )
     }
 }
 
