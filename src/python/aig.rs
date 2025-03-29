@@ -30,17 +30,17 @@ impl PyAig {
         Ok(PyAig { inner: aig })
     }
 
-    pub fn inputs(&self) -> Vec<u32> {
-        self.inner.inputs().to_vec()
+    pub fn inputs(&self) -> &[u32] {
+        self.inner.inputs()
     }
-    pub fn latches(&self) -> Vec<u32> {
-        self.inner.latches().to_vec()
+    pub fn latches(&self) -> &[u32] {
+        self.inner.latches()
     }
     pub fn outputs(&self) -> Vec<i32> {
         self.inner.outputs().iter().map(|r| r.get()).collect()
     }
-    pub fn and_gates(&self) -> Vec<u32> {
-        self.inner.and_gates().to_vec()
+    pub fn and_gates(&self) -> &[u32] {
+        self.inner.and_gates()
     }
 
     pub fn children(&self, id: u32) -> Vec<i32> {
