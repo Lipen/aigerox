@@ -33,18 +33,19 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install maturin
-          pip install poetry
-          poetry install
+      - name: Build Python package
+        uses: PyO3/maturin-action@v1
+        with:
+          args: --release --out dist
 
-      - name: Test Python
+      - name: Test Python package
         run: |
-          poetry run maturin develop
+          set -e
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install aigerox --find-links dist --force-reinstall
           pip install pytest
-          poetry run pytest
+          pytest
 
   fmt:
     name: Rustfmt
