@@ -39,8 +39,8 @@ impl PyAig {
     pub fn outputs(&self) -> Vec<i32> {
         self.inner.outputs().iter().map(|r| r.get()).collect()
     }
-    pub fn gates(&self) -> Vec<u32> {
-        self.inner.and_gates().map(|gate| gate.id).collect()
+    pub fn and_gates(&self) -> Vec<u32> {
+        self.inner.and_gates().to_vec()
     }
 
     pub fn children(&self, id: u32) -> Vec<i32> {
