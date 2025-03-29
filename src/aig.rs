@@ -84,7 +84,7 @@ impl Aig {
         }
         matches!(self.nodes[&id], Node::Latch(..))
     }
-    pub fn is_gate(&self, id: u32) -> bool {
+    pub fn is_and_gate(&self, id: u32) -> bool {
         if id == 0 {
             return false;
         }
