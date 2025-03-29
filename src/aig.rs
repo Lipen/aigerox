@@ -108,14 +108,12 @@ impl Aig {
 
     pub fn add_input(&mut self, id: u32) {
         assert!(!self.contains(id));
-        assert!(!self.inputs.contains(&id));
         self.nodes.insert(id, Node::input(id));
         self.inputs.push(id);
     }
 
     pub fn add_latch(&mut self, id: u32, next: Ref) {
         assert!(!self.contains(id));
-        assert!(!self.latches.contains(&id));
         self.nodes.insert(id, Node::latch(id, next));
         self.latches.push(id);
     }
@@ -126,7 +124,6 @@ impl Aig {
 
     pub fn add_and_gate(&mut self, id: u32, args: [Ref; 2]) {
         assert!(!self.contains(id));
-        assert!(!self.and_gates.contains(&id));
         // NOTE: In some AIGER files, the gates are NOT defined in the topological order,
         //       so the following assert might fail.
         // for arg in args.iter() {
