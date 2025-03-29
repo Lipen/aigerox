@@ -64,6 +64,7 @@ impl Aig {
     pub fn nodes(&self) -> &HashMap<u32, Node> {
         &self.nodes
     }
+
     pub fn and_gates(&self) -> impl Iterator<Item = AigAndGate> + use<'_> {
         self.nodes.values().filter_map(|node| match node {
             &Node::AndGate(gate) => Some(gate),
