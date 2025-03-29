@@ -11,6 +11,7 @@ pub struct Aig {
     inputs: Vec<u32>,
     latches: Vec<u32>,
     outputs: Vec<Ref>,
+    and_gates: Vec<u32>,
 }
 
 impl Aig {
@@ -19,12 +20,14 @@ impl Aig {
         inputs: Vec<u32>,
         latches: Vec<u32>,
         outputs: Vec<Ref>,
+        and_gates: Vec<u32>,
     ) -> Self {
         Self {
             nodes,
             inputs,
             latches,
             outputs,
+            and_gates,
         }
     }
 }
@@ -36,6 +39,7 @@ impl Default for Aig {
             inputs: Vec::new(),
             latches: Vec::new(),
             outputs: Vec::new(),
+            and_gates: Vec::new(),
         }
     }
 }
@@ -61,15 +65,12 @@ impl Aig {
     pub fn outputs(&self) -> &[Ref] {
         &self.outputs
     }
-    pub fn nodes(&self) -> &HashMap<u32, Node> {
-        &self.nodes
+    pub fn and_gates(&self) -> &[u32] {
+        &self.and_gates
     }
 
-    pub fn and_gates(&self) -> impl Iterator<Item = AigAndGate> + use<'_> {
-        self.nodes.values().filter_map(|node| match node {
-            &Node::AndGate(gate) => Some(gate),
-            _ => None,
-        })
+    pub fn nodes(&self) -> &HashMap<u32, Node> {
+        &self.nodes
     }
 
     pub fn is_input(&self, id: u32) -> bool {
@@ -116,7 +117,7 @@ impl Aig {
             _ => panic!("Node with id {} is not a latch", id),
         }
     }
-    pub fn gate(&self, id: u32) -> AigAndGate {
+    pub fn and_gate(&self, id: u32) -> AigAndGate {
         match self.node(id) {
             Node::AndGate(gate) => gate,
             _ => panic!("Node with id {} is not an AND gate", id),
@@ -143,12 +144,14 @@ impl Aig {
 
     pub fn add_and_gate(&mut self, id: u32, args: [Ref; 2]) {
         assert!(!self.contains(id));
+        assert!(!self.and_gates.contains(&id));
         // NOTE: In some AIGER files, the gates are NOT defined in the topological order,
         //       so the following assert might fail.
         // for arg in args.iter() {
         //     assert!(self.nodes.contains_key(&arg.id()));
         // }
         self.nodes.insert(id, Node::and_gate(id, args));
+        self.and_gates.push(id);
     }
 }
 

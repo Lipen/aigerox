@@ -54,7 +54,7 @@ impl Aig {
         let mut gates: Vec<u32> = self.and_gates().map(|g| g.id).collect();
         gates.sort();
         for id in gates {
-            let gate = self.gate(id);
+            let gate = self.and_gate(id);
             let [left, right] = gate.args;
             writeln!(writer, "{} {} {}", id * 2, left.raw(), right.raw())?;
         }

@@ -54,8 +54,8 @@ impl PyAig {
     pub fn is_latch(&self, id: u32) -> bool {
         self.inner.is_latch(id)
     }
-    pub fn is_gate(&self, id: u32) -> bool {
-        self.inner.is_gate(id)
+    pub fn is_and_gate(&self, id: u32) -> bool {
+        self.inner.is_and_gate(id)
     }
 
     pub fn __contains__(&self, id: u32) -> bool {
